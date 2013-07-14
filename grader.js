@@ -24,12 +24,12 @@ References:
 var fs = require('fs');
 var program = require('commander');
 var cheerio = require('cheerio');
-var sys = require('util');
+var sys = require('util'),
+    rest = require('restler');
 
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
 var URL_DEFAULT = "http://http://salty-castle-2818.herokuapp.com/";
-var rest = require('restler');
 
 var assertFileExists = function(infile) {
     var instr = infile.toString();
@@ -43,7 +43,6 @@ var assertFileExists = function(infile) {
 var cheerioHtmlFile = function(htmlfile) {
     return cheerio.load(fs.readFileSync(htmlfile));
 };
-
 
 var loadChecks = function(checksfile) {
     return JSON.parse(fs.readFileSync(checksfile));
@@ -61,7 +60,7 @@ var checkHtmlFile = function(htmlfile, checksfile) {
 };
 
 var clone = function(fn) {
-    // Workaround for commander.js issue.
+    // Workaround for commander issue.
     // http://stackoverflow.com/a/6772648
     return fn.bind({});
 };
@@ -88,4 +87,4 @@ if(require.main == module) {
     console.log(outJson);
 } else {
     exports.checkHtmlFile = checkHtmlFile;
-} 
+}
