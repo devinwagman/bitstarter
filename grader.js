@@ -65,8 +65,8 @@ var clone = function(fn) {
     return fn.bind({});
 };
 
-var checkURL = function(URL_DEFAULT) {
-   rest.get(URL_DEFAULT).on('complete', function(result) {
+var checkURL = function(url) {
+   rest.get(url).on('complete', function(result) {
         if (result instanceof Error) {
         sys.puts('Error: ' + result.message);
         this.retry(5000); // try again after 5 sec
