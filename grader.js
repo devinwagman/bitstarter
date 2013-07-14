@@ -29,7 +29,7 @@ var sys = require('util'),
 
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
-var URL_DEFAULT = "http://http://salty-castle-2818.herokuapp.com/";
+var URL_DEFAULT = "http://salty-castle-2818.herokuapp.com/";
 
 var assertFileExists = function(infile) {
     var instr = infile.toString();
