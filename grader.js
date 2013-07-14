@@ -26,6 +26,7 @@ var program = require('commander');
 var cheerio = require('cheerio');
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
+var rest = require('restler');
 
 var assertFileExists = function(infile) {
     var instr = infile.toString();
@@ -39,6 +40,7 @@ var assertFileExists = function(infile) {
 var cheerioHtmlFile = function(htmlfile) {
     return cheerio.load(fs.readFileSync(htmlfile));
 };
+
 
 var loadChecks = function(checksfile) {
     return JSON.parse(fs.readFileSync(checksfile));
@@ -60,6 +62,17 @@ var clone = function(fn) {
     // http://stackoverflow.com/a/6772648
     return fn.bind({});
 };
+
+var checkURL = function(URL_DEFAULT) {
+   rest.get(URL_DEFAULT).on('complete', function(result) {
+        if (result instanceof Error) {
+        sys.puts('Error: ' + result.message);
+        this.retry(5000); // try again after 5 sec
+        } else {
+        sys.puts(result);
+         }
+    });
+}
 
 if(require.main == module) {
     program
