@@ -65,18 +65,18 @@ var clone = function(fn) {
     return fn.bind({});
 };
 
-var checkURL = function(url) { 
-rest.get(buffer.toString('utf8', 0, buffer.length)).on('complete', function(result) {
-  if (result instanceof Error) {
-    sys.puts('Error: ' + result.message);
-    this.retry(5000); // try again after 5 sec
-  } else {
-         checkJson = checkHtml(result, program.checks);
-  }
-
-});
-return checkJson;
-}
+var geturl = function(url, checksfile) {
+    rest.get(url).on('complete', function(result){
+        $ = cheerio.load(result);
+	var checks = loadChecks(checksfile).sort();
+        var out = {};
+        for (var ii in checks) {
+            var present = $(checks[ii]).length > 0;
+            out[checks[ii]] = present;
+        }
+        return out;
+	});
+};
 
 if(require.main == module) {
     program
