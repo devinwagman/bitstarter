@@ -65,15 +65,17 @@ var clone = function(fn) {
     return fn.bind({});
 };
 
-var checkURL = function(url) {
-   rest.get(url).on('complete', function(result) {
-        if (result instanceof Error) {
-        sys.puts('Error: ' + result.message);
-        this.retry(5000); // try again after 5 sec
-        } else {
-        sys.puts(result);
-         }
-    });
+var checkURL = function(url) { 
+rest.get(buffer.toString('utf8', 0, buffer.length)).on('complete', function(result) {
+  if (result instanceof Error) {
+    sys.puts('Error: ' + result.message);
+    this.retry(5000); // try again after 5 sec
+  } else {
+         checkJson = checkHtml(result, program.checks);
+  }
+
+});
+return checkJson;
 }
 
 if(require.main == module) {
